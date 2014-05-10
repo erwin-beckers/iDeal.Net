@@ -90,13 +90,18 @@ The response contains the status, which can be Success, Failure, Cancelled, Open
 
 ## Certificates
 In order to use iDeal you need to create (or buy) a certificate. The public key needs to be uploaded to your iDeal dashboard so they are able to verify your messages/requests. To create a self-signed certifcate you can use openSSL
-
+Download and install openSSL from http://www.openssl.org/related/binaries.html
+then from the command prompt run the following commands:
 
   * openssl genrsa -aes128 -out private.pem -passout pass:[YOUR PRIVATE PASSWORD] 2048
   * openssl req -x509 -sha256 -new -key private.pem -passin pass:[YOUR PRIVATE PASSWORD] -days 1825 -out certificate.cer
   * openssl pkcs12 -export -in certificate.cer -inkey privateKey.pem -out yourprivate.pfx
 
-upload the certificate.cer to your iDeal dashboard and use 'yourprivate.pfx' from your web.config/app.config
+After this:
+ * upload the certificate.cer to your iDeal dashboard 
+ * put 'yourprivate.pfx'in your App_Data\ folder on your website and make sure the web.config/app.config specifies the correct path and password
+ * download the public certificate provided by your iDeal provider and place it in the App_Data\ folder and make sure the web.config/app.config specifies the correct path 
+ 
 
 ## License
 All source code is licensed under the [GNU Lesser General Public License](http://www.gnu.org/licenses/lgpl.html)
