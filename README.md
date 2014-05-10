@@ -23,8 +23,8 @@ Second implement the iDeal section
 	<iDeal>
         <merchant id="123456789" subId="0" />
         <acquirer url="https://abnamro-test.ideal-payment.de/ideal/iDEALv3/" />
-        <acceptantCertificate filename="APP_Data\yourprivate.pfx" password="your private password" />
-	<acquirerCertificate filename="APP_Data\ideal_public.cer" />
+        <acceptantCertificate filename="App_Data\yourprivate.pfx" password="your private password" />
+        <acquirerCertificate filename="App_Data\ideal_public.cer" />
     </iDeal>
 
 The merchant id is the unique identifier you received from your iDeal provider(acquirer). The merchant subId is usually 0, or otherwise specified by the acquirer. The url points to the url of your acquirer which handles all iDeal requests.
@@ -89,14 +89,19 @@ Parameter 'trxid' holds the transaction id, and 'ec' holds the entrance code you
 The response contains the status, which can be Success, Failure, Cancelled, Open or Expired. The response also contains the account number, name and city of the customer.
 
 ## Certificates
-In order to use iDeal you need to create (or buy) a certificate. The public key needs to be uploaded to your iDeal provider (acquirer) so they are able to verify your messages/requests. To create a self-signed certifcate you can use openSSL
+In order to use iDeal you need to create (or buy) a certificate. The public key needs to be uploaded to your iDeal dashboard so they are able to verify your messages/requests. To create a self-signed certifcate you can use openSSL
+Download and install openSSL from http://www.openssl.org/related/binaries.html
+then from the command prompt run the following commands:
 
+  * openssl genrsa -aes128 -out private.pem -passout pass:[YOUR PRIVATE PASSWORD] 2048
+  * openssl req -x509 -sha256 -new -key private.pem -passin pass:[YOUR PRIVATE PASSWORD] -days 1825 -out certificate.cer
+  * openssl pkcs12 -export -in certificate.cer -inkey privateKey.pem -out yourprivate.pfx
 
-* openssl genrsa -aes128 -out private.pem -passout pass:[YOUR PRIVATE PASSWORD] 2048
-* openssl req -x509 -sha256 -new -key private.pem -passin pass:[YOUR PRIVATE PASSWORD] -days 1825 -out certificate.cer
-* openssl pkcs12 -export -in certificate.cer -inkey privateKey.pem -out yourprivate.pfx
-
-upload the certificate.cer to your iDeal dashboard and use 'yourprivate.pfx' from your web.config/app.config
+After this:
+ * upload the certificate.cer to your iDeal dashboard 
+ * put 'yourprivate.pfx'in your App_Data\ folder on your website and make sure the web.config/app.config specifies the correct path and password
+ * download the public certificate provided by your iDeal provider and place it in the App_Data\ folder and make sure the web.config/app.config specifies the correct path 
+ 
 
 ## License
 All source code is licensed under the [GNU Lesser General Public License](http://www.gnu.org/licenses/lgpl.html)
