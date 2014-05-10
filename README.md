@@ -1,9 +1,10 @@
 # iDeal.NET
-iDeal is the leading online payment platform in the Netherlands. iDeal.NET provides an API to easily communicate with your iDeal provider and integrate iDeal payments into your .NET (web)applications.
+iDeal is the leading online payment platform in the Netherlands. 
+iDeal.NET provides an API to easily communicate with your iDeal provider and integrate iDeal payments into your .NET (web)applications.
 The project contains a sample application which gives a basic example of the usage of iDeal.NET.
 
 ## iDeal versions
-iDeal.NET is aimed at iDeal Professional (Rabobank), iDeal Zelfbouw (ABN Amro), iDeal Integrated and iDeal Advanced (ING Bank). These versions allow for real-time feedback on transactions. 
+iDeal.NET is aimed at the latest version of iDeal v3.3.1 and works with iDeal Professional (Rabobank), iDeal Zelfbouw (ABN Amro), iDeal Integrated and iDeal Advanced (ING Bank). These versions allow for real-time feedback on transactions. 
 iDeal.NET does not yet support iDeal Basic (ING Bank), iDeal Hosted , iDeal Lite (Rabobank) and iDeal Zakelijk which are easily implemented in applications but do not allow for real-time feedback on transactions.
 
 
@@ -22,13 +23,13 @@ Second implement the iDeal section
 	<iDeal>
         <merchant id="123456789" subId="0" />
         <acquirer url="https://abnamro-test.ideal-payment.de/ideal/iDEALv3/" />
-        <acceptantCertificate filename="APP_Data\yourprivate.pfx" password="idealsim" />
+        <acceptantCertificate filename="APP_Data\yourprivate.pfx" password="your private password" />
 	<acquirerCertificate filename="APP_Data\ideal_public.cer" />
     </iDeal>
 
 The merchant id is the unique identifier you received from your iDeal provider(acquirer). The merchant subId is usually 0, or otherwise specified by the acquirer. The url points to the url of your acquirer which handles all iDeal requests.
 
-The acceptant certicate is the private certificate created or bought by the acceptant (webshop), the related public key has to be uploaded to your acquirer. See below how to create a new self signed certificate. 
+The acceptant certicate is the private certificate you created (or bought), the related public key has to be uploaded to your ideal dashboard. See below how to create a new self signed certificate. 
 
 The acquirer certificate is the certificate you receive from your ideal provider, with this certificate responses from the acquirer are verified.
 
@@ -41,7 +42,7 @@ In order for customers to make a payment, they first have to choose their bank. 
 	var directoryResponse = iDealService.SendDirectoryRequest();
 	var issuers = directoryResponse.Issuers;
 
-The response from a directory request holds a list of issuers. De issuer object holds all the relevant information of an issuer like id, name and listtype. The listtype determines if the issuer should be placed on the shortlist or the longlist. Issuers on the shortlist are listed first in the dropdown, on the longlist second. Check the iDeal Merchant Integration Guide from your acquirer for exact details on rendering the dropdown.
+The response from a directory request holds a list of issuers. De issuer object holds all the relevant information of an issuer like id and name. Check the iDeal Merchant Integration Guide from your acquirer for exact details on rendering the dropdown.
 In order the minimize the calls to the acquirer it's recommended (and often required) you cache the result of a directory request and refresh the cache every 24 hours.
 
 ## Transaction request
@@ -88,14 +89,14 @@ Parameter 'trxid' holds the transaction id, and 'ec' holds the entrance code you
 The response contains the status, which can be Success, Failure, Cancelled, Open or Expired. The response also contains the account number, name and city of the customer.
 
 ## Certificates
-In order to use iDeal you need to create (or buy) a ssl certificate. The public key needs to be uploaded to your iDeal provider (acquirer) so they are able to verify your messages/requests. To create a self-signed certifcate you can use openSSL
+In order to use iDeal you need to create (or buy) a certificate. The public key needs to be uploaded to your iDeal provider (acquirer) so they are able to verify your messages/requests. To create a self-signed certifcate you can use openSSL
 
 
 * openssl genrsa -aes128 -out private.pem -passout pass:[YOUR PRIVATE PASSWORD] 2048
 * openssl req -x509 -sha256 -new -key private.pem -passin pass:[YOUR PRIVATE PASSWORD] -days 1825 -out certificate.cer
 * openssl pkcs12 -export -in certificate.cer -inkey privateKey.pem -out yourprivate.pfx
 
-
+upload the certificate.cer to your iDeal dashboard and use 'yourprivate.pfx' from your web.config/app.config
 
 ## License
 All source code is licensed under the [GNU Lesser General Public License](http://www.gnu.org/licenses/lgpl.html)
