@@ -89,7 +89,7 @@ Parameter 'trxid' holds the transaction id, and 'ec' holds the entrance code you
 The response contains the status, which can be Success, Failure, Cancelled, Open or Expired. The response also contains the account number, name and city of the customer.
 
 ## Certificates
-In order to use iDeal you need to create (or buy) a certificate. The public key needs to be uploaded to your iDeal provider (acquirer) so they are able to verify your messages/requests. To create a self-signed certifcate you can use openSSL
+In order to use iDeal you need to create (or buy) a certificate. The public key needs to be uploaded to your iDeal dashboard so they are able to verify your messages/requests. To create a self-signed certifcate you can use openSSL
 
 
 * openssl genrsa -aes128 -out private.pem -passout pass:[YOUR PRIVATE PASSWORD] 2048
