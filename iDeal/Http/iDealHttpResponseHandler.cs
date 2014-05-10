@@ -16,6 +16,10 @@ namespace iDeal.Http
         {
             var xDocument = XElement.Parse(response);
 
+            if (!signatureProvider.VerifySignature(response))
+            {
+              throw new InvalidSignatureException();
+            }
             switch (xDocument.Name.LocalName)
             {
                 case "DirectoryRes":

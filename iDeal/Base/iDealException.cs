@@ -6,11 +6,13 @@ namespace iDeal.Base
     public class iDealException : Exception
     {
         public DateTime createDateTimestamp { get; private set; }
-        public string ErrorCode { get; private set; }
-        public string ErrorMessage { get; private set; }
-        public string ErrorDetail { get; private set; }
+        public string ErrorCode { get;  set; }
+        public string ErrorMessage { get;  set; }
+        public string ErrorDetail { get;  set; }
         public string ConsumerMessage { get; set; }
-        
+        public iDealException()
+        {
+        }
         public iDealException(XElement xDocument)
         {
             XNamespace xmlNamespace = "http://www.idealdesk.com/ideal/messages/mer-acq/3.3.1";
