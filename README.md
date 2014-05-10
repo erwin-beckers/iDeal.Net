@@ -24,7 +24,7 @@ Second implement the iDeal section
         <merchant id="123456789" subId="0" />
         <acquirer url="https://abnamro-test.ideal-payment.de/ideal/iDEALv3/" />
         <acceptantCertificate filename="APP_Data\yourprivate.pfx" password="your private password" />
-	<acquirerCertificate filename="APP_Data\ideal_public.cer" />
+        <acquirerCertificate filename="APP_Data\ideal_public.cer" />
     </iDeal>
 
 The merchant id is the unique identifier you received from your iDeal provider(acquirer). The merchant subId is usually 0, or otherwise specified by the acquirer. The url points to the url of your acquirer which handles all iDeal requests.
