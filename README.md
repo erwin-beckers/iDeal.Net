@@ -105,3 +105,4 @@ After this:
 
 ## License
 All source code is licensed under the [GNU Lesser General Public License](http://www.gnu.org/licenses/lgpl.html)
+[bruidsfotograaf](https://www.erwinbeckers.nl)
